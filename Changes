@@ -1,5 +1,11 @@
 Revision history for String-BufferStack
 
+1.03   Sun Nov 23 01:00:30 2008
+        * Require 5.8.0 or higher (for three-arg open and local *STDOUT in tests)
+
+1.02   Sun Nov 23 01:00:30 2008
+        * Releng fixes
+
 1.01   Sun Nov 23 00:51:30 2008
         * Test fixes
 
