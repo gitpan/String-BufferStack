@@ -1,8 +1,7 @@
 use warnings;
 use strict;
 
-use Test::More 'no_plan';
-use YAML;
+use Test::More tests => 26;
 
 use vars qw/$BUFFER/;
 

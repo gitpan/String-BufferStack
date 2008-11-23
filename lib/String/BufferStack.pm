@@ -3,7 +3,7 @@ package String::BufferStack;
 use strict;
 use warnings;
 
-our $VERSION; $VERSION = "1.00";
+our $VERSION; $VERSION = "1.01";
 
 =head1 NAME
 
