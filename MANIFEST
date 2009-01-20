@@ -17,5 +17,4 @@ t/01-basic.t
 t/02-simple-stack.t
 t/03-capture.t
 t/04-filter.t
-t/05-data.t
-t/06-preappend.t
+t/05-preappend.t

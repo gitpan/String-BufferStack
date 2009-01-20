@@ -3,7 +3,7 @@ abstract: Nested buffers for templating systems
 author: 
   - Alex Vandiver <alexmv@bestpractical.com>
 distribution_type: module
-generated_by: Module::Install version 0.68
+generated_by: Module::Install version 0.70
 license: Artistic
 meta-spec: 
   url: http://module-build.sourceforge.net/META-spec-v1.3.html
@@ -15,4 +15,4 @@ no_index:
     - t
 requires: 
   perl: 5.8.0
-version: 1.03
+version: 1.10

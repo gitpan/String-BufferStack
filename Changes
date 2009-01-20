@@ -1,5 +1,8 @@
 Revision history for String-BufferStack
 
+1.10   Thu Jan 15 23:37:17 2009
+        * Remove support for data stack
+
 1.03   Sun Nov 23 01:00:30 2008
         * Require 5.8.0 or higher (for three-arg open and local *STDOUT in tests)
 

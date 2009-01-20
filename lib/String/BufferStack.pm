@@ -3,7 +3,7 @@ package String::BufferStack;
 use strict;
 use warnings;
 
-our $VERSION; $VERSION = "1.03";
+our $VERSION; $VERSION = "1.10";
 
 =head1 NAME
 
@@ -54,7 +54,6 @@ sub new {
     $output = '';
     return bless {
         stack => [],
-        data_stack => [],
         top => undef,
         output => \$output,
         out_method => $args{out_method} || sub { print STDOUT @_ },
@@ -114,13 +113,6 @@ By default, filters are lazy, being called only when a frame is
 popped.  They can be forced at any time by calling L</flush_filters>,
 however.
 
-=item data
-
-Arbitrary data associated with this stack frame.
-C<String::BufferStack> does not inspect this or rely on it in any way,
-besides tracking it.  See also L</data>, L</data_ref>, and
-L</data_depth>.
-
 =back
 
 =cut
@@ -131,7 +123,6 @@ sub push {
         buffer => $self->{top} ? $self->{top}{pre_filter} : $self->{output},
         pre_append => undef,
         filter => undef,
-        data => undef,
         @_
     };
     my $filter = "";
@@ -143,7 +134,6 @@ sub push {
     local $self->{local_frame} = $frame;
     $self->set_pre_append(delete $frame->{pre_append}) if exists $frame->{pre_append};
     CORE::push(@{$self->{stack}}, $frame);
-    CORE::push(@{$self->{data_stack}}, $frame->{data}) if $frame->{data};
 }
 
 =head2 depth
@@ -193,7 +183,7 @@ sub append {
 Similar to L</append>, but appends the strings to the output side of
 the frame, skipping pre-append callbacks and filters.
 
-When called with no frames on the stack, appends the stringins
+When called with no frames on the stack, appends the strings
 directly to the L</output_buffer>.
 
 =cut
@@ -228,7 +218,6 @@ sub pop {
     return unless $self->{top};
     $self->filter;
     my $frame = CORE::pop(@{$self->{stack}});
-    CORE::pop(@{$self->{data_stack}}) if $frame->{data};
     local $self->{local_frame} = $frame;
     $self->set_pre_append(undef);
     $self->{top} = @{$self->{stack}} ? $self->{stack}[-1] : undef;
@@ -444,43 +433,6 @@ sub out_method {
     my $self = shift;
     $self->{out_method} = shift if @_;
     return $self->{out_method};
-}
-
-=head2 data [INDEX]
-
-With no arguments, returns the topmost defined C<data> argument to
-L</push>.  With C<INDEX> provided, indexes into the array of defined
-C<data> elements, -1 being the most recent, 0 being the first.
-
-=cut
-
-sub data {
-    my $self = shift;
-    my $i = @_ ? shift : -1;
-    return $self->{data_stack}[$i];
-}
-
-=head2 data_depth
-
-Returns the number of data elements in the stack.
-
-=cut
-
-sub data_depth {
-    my $self = shift;
-    return scalar @{$self->{data_stack}};
-}
-
-=head2 data_ref
-
-Returns a reference to the data stack, allowing it to be arbitrarily
-manipulated.
-
-=cut
-
-sub data_ref {
-    my $self = shift;
-    return $self->{data_stack};
 }
 
 1;
