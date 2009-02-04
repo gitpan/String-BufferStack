@@ -3,7 +3,7 @@ package String::BufferStack;
 use strict;
 use warnings;
 
-our $VERSION; $VERSION = "1.10";
+our $VERSION; $VERSION = "1.12";
 
 =head1 NAME
 
@@ -128,7 +128,7 @@ sub push {
     my $filter = "";
     my $buffer = "";
     $frame->{buffer} = \$buffer if delete $frame->{private};
-    $frame->{length} = (defined ${$frame->{buffer}}) ? length ${$frame->{buffer}} : 0;
+    $frame->{length} = (defined ${$frame->{buffer}}) ? CORE::length(${$frame->{buffer}}) : 0;
     $frame->{pre_filter} = $frame->{filter} ? \$filter : $frame->{buffer};
     $self->{top} = $frame;
     local $self->{local_frame} = $frame;
@@ -283,7 +283,7 @@ their pre-append hooks.
 sub filter {
     my $self = shift;
     my $frame = shift || $self->{top};
-    return unless $frame and $frame->{filter} and length ${$frame->{pre_filter}};
+    return unless $frame and $frame->{filter} and CORE::length(${$frame->{pre_filter}});
 
     # We remove the input before we shell out to the filter, so we
     # don't get into infinite loops.
@@ -329,46 +329,6 @@ sub flush_filters {
     }
 }
 
-=head2 flush_output
-
-Flushes all filters using L</flush_filters>, then flushes output from
-the output buffer, using the configured L</out_method>.
-
-=cut
-
-sub flush_output {
-    my $self = shift;
-    $self->flush_filters;
-
-    # Look at what we have at the end
-    return unless length ${$self->{output}};
-    $self->{out_method}->(${$self->{output}});
-    ${$self->{output}} = "";
-    return "";
-}
-
-=head2 output_buffer
-
-Returns the pending output buffer.
-
-=cut
-
-sub output_buffer {
-    my $self = shift;
-    return ${$self->{output}};
-}
-
-=head2 output_buffer_ref
-
-Returns a reference to the output buffer, allowing you to modify the output buffer.
-
-=cut
-
-sub output_buffer_ref {
-    my $self = shift;
-    return $self->{output};
-}
-
 =head2 buffer
 
 Returns the contents of the output buffer of the topmost frame; if
@@ -381,6 +341,19 @@ sub buffer {
     return $self->{top} ? ${$self->{top}{buffer}} : ${$self->{output}};
 }
 
+=head2 buffer_ref
+
+Returns a reference to the output buffer of the topmost frame; if
+there are no frames, returns a reference to the output buffer.  Note
+that adjusting this skips pre-append and filter hooks.
+
+=cut
+
+sub buffer_ref {
+    my $self = shift;
+    return $self->{top} ? $self->{top}{buffer} : $self->{output};
+}
+
 =head2 length
 
 Returns the number of characters appended to the current frame; if
@@ -390,7 +363,50 @@ there are no frames, returns the length of the output buffer.
 
 sub length {
     my $self = shift;
-    return $self->{top} ? length(${$self->{top}{buffer}}) - $self->{top}{length} : length(${$self->{output}});
+    return $self->{top} ? CORE::length(${$self->{top}{buffer}}) - $self->{top}{length} : CORE::length(${$self->{output}});
+}
+
+
+=head2 flush_output
+
+Flushes all filters using L</flush_filters>, then flushes output from
+the output buffer, using the configured L</out_method>.
+
+=cut
+
+sub flush_output {
+    my $self = shift;
+    $self->flush_filters;
+
+    # Look at what we have at the end
+    return unless CORE::length(${$self->{output}});
+    $self->{out_method}->(${$self->{output}});
+    ${$self->{output}} = "";
+    return "";
+}
+
+=head2 output_buffer
+
+Returns the pending output buffer, which sits below all existing
+frames.
+
+=cut
+
+sub output_buffer {
+    my $self = shift;
+    return ${$self->{output}};
+}
+
+=head2 output_buffer_ref
+
+Returns a reference to the pending output buffer, allowing you to
+modify it.
+
+=cut
+
+sub output_buffer_ref {
+    my $self = shift;
+    return $self->{output};
 }
 
 =head2 clear
@@ -425,7 +441,8 @@ sub clear_top {
 
 =head2 out_method [CALLBACK]
 
-Gets or sets the output method callback.
+Gets or sets the output method callback, which is given content from
+the pending output buffer, which sits below all frames.
 
 =cut
 

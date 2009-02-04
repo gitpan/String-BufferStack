@@ -14,10 +14,10 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 0ccbb012c60fbe27c638236052ab6674ba58125a Changes
+SHA1 77a221dfb83f9349f28ec92ff0718bf7f4fdb780 Changes
 SHA1 fb4dfbe1b8393a2a3114191cdba947a15da80ac3 MANIFEST
 SHA1 7e740186be7996b6ce3ed345d17f9760678a5c6b MANIFEST.SKIP
-SHA1 2c97626f9d9ac85119a87a05556a43dffc3d71b4 META.yml
+SHA1 8dc91abd11dde545fac64657b7d95736696e2adf META.yml
 SHA1 7630604c507f12721ed80f4c9c2b150dde21eb6d Makefile.PL
 SHA1 8b836389e4bc170eb8d19b7296b2f4978ac36136 inc/Module/Install.pm
 SHA1 85b32a1d5f215d99f411c3dd6113b537fcd5c57d inc/Module/Install/Base.pm
@@ -27,7 +27,7 @@ SHA1 da42b522e5a7ffbae0ceec900f3635ad9990c565 inc/Module/Install/Makefile.pm
 SHA1 ba005818ee9f97146bfa4e14e53c684e9e446902 inc/Module/Install/Metadata.pm
 SHA1 85e6b1cf5b7ca81bfb469a99389fa947d4b8a08e inc/Module/Install/Win32.pm
 SHA1 d32dff9f0d2f02023ca6d79a48d62fd855916351 inc/Module/Install/WriteAll.pm
-SHA1 57fe95de49e20ccc54ee650e2baa58561ad201c0 lib/String/BufferStack.pm
+SHA1 d0d33c2186eecde4b720cb859764d82fd74dcf50 lib/String/BufferStack.pm
 SHA1 3a8cf31db6f3c50932215f43ee335190a5888084 t/01-basic.t
 SHA1 44ef8aa5cf63e875a4eea5b8043a1df9b8ff4fed t/02-simple-stack.t
 SHA1 2facb62ae74edb458c201635cf9156ffa63dcb16 t/03-capture.t
@@ -36,7 +36,7 @@ SHA1 bf5f3e896350661bcbf1f03d97f7eda15c5bfdf8 t/05-preappend.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEARECAAYFAklwD1kACgkQMflWJZZAbqAJfwCePfMsVpr9vGYjRJSMmOO49CiI
-zHQAn1VHFR1RVJW5nBlX0aHZQdUBXthq
-=Ni5U
+iEYEARECAAYFAkmJ74AACgkQMflWJZZAbqBCFwCeKNAwvjHCWI2U705xZXHz07uZ
+yygAoIEaBLXDg2M31Gde8fZPBirbXuxF
+=kpNR
 -----END PGP SIGNATURE-----

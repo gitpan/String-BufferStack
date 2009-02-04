@@ -1,5 +1,9 @@
 Revision history for String-BufferStack
 
+1.12   Wed Feb  4 14:41:17 2009
+        * Add buffer_ref
+        * Documentation adjustments
+
 1.10   Thu Jan 15 23:37:17 2009
         * Remove support for data stack
 
