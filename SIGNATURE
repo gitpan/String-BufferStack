@@ -14,20 +14,21 @@ not run its Makefile.PL or Build.PL.
 -----BEGIN PGP SIGNED MESSAGE-----
 Hash: SHA1
 
-SHA1 77a221dfb83f9349f28ec92ff0718bf7f4fdb780 Changes
-SHA1 fb4dfbe1b8393a2a3114191cdba947a15da80ac3 MANIFEST
+SHA1 0509e7d55b4a5133937d3fd054bd8e7b3bdac306 Changes
+SHA1 199bc083c59728f3ad8a7b75014872e5032e7ab5 MANIFEST
 SHA1 7e740186be7996b6ce3ed345d17f9760678a5c6b MANIFEST.SKIP
-SHA1 8dc91abd11dde545fac64657b7d95736696e2adf META.yml
+SHA1 056bc43818bd24a8ab7435dc6125f48fcd6b86ef META.yml
 SHA1 7630604c507f12721ed80f4c9c2b150dde21eb6d Makefile.PL
-SHA1 8b836389e4bc170eb8d19b7296b2f4978ac36136 inc/Module/Install.pm
-SHA1 85b32a1d5f215d99f411c3dd6113b537fcd5c57d inc/Module/Install/Base.pm
-SHA1 fde745e180861c7c0ba3ee5a767cafdbdb1d3ebd inc/Module/Install/Can.pm
-SHA1 e259400ceb54c34def9c994f52d7091108ce7ffc inc/Module/Install/Fetch.pm
-SHA1 da42b522e5a7ffbae0ceec900f3635ad9990c565 inc/Module/Install/Makefile.pm
-SHA1 ba005818ee9f97146bfa4e14e53c684e9e446902 inc/Module/Install/Metadata.pm
-SHA1 85e6b1cf5b7ca81bfb469a99389fa947d4b8a08e inc/Module/Install/Win32.pm
-SHA1 d32dff9f0d2f02023ca6d79a48d62fd855916351 inc/Module/Install/WriteAll.pm
-SHA1 d0d33c2186eecde4b720cb859764d82fd74dcf50 lib/String/BufferStack.pm
+SHA1 dee3e130b392c8b6997be5ef899fd14a9370dabd README
+SHA1 ae018c4565c1277089ca8f1b28f888d95430cb7f inc/Module/Install.pm
+SHA1 4552acdfca8b78f8015d8449e1325616259095f5 inc/Module/Install/Base.pm
+SHA1 7fb663fff161fb45882b52edd62857bf15359658 inc/Module/Install/Can.pm
+SHA1 8b1d3db746faa6faf2d967a48d3812ec1f44b4c6 inc/Module/Install/Fetch.pm
+SHA1 9f6beaa2f4749ceb5dd0c9b0c647d0f3289c7b46 inc/Module/Install/Makefile.pm
+SHA1 7ad1da4fff7a1e7a634c9d734111c8292be08884 inc/Module/Install/Metadata.pm
+SHA1 e9aa83f3e8b16ccfce544a90a57b63b70a497759 inc/Module/Install/Win32.pm
+SHA1 ade2ac0b0246d4d8e28fa46942e53f6925abda46 inc/Module/Install/WriteAll.pm
+SHA1 9305e4ef0731b11c184189c31e2fbbd49a763b55 lib/String/BufferStack.pm
 SHA1 3a8cf31db6f3c50932215f43ee335190a5888084 t/01-basic.t
 SHA1 44ef8aa5cf63e875a4eea5b8043a1df9b8ff4fed t/02-simple-stack.t
 SHA1 2facb62ae74edb458c201635cf9156ffa63dcb16 t/03-capture.t
@@ -36,7 +37,7 @@ SHA1 bf5f3e896350661bcbf1f03d97f7eda15c5bfdf8 t/05-preappend.t
 -----BEGIN PGP SIGNATURE-----
 Version: GnuPG v2.0.9 (GNU/Linux)
 
-iEYEARECAAYFAkmJ74AACgkQMflWJZZAbqBCFwCeKNAwvjHCWI2U705xZXHz07uZ
-yygAoIEaBLXDg2M31Gde8fZPBirbXuxF
-=kpNR
+iEYEARECAAYFAkmohEQACgkQMflWJZZAbqBNuwCfTy6rdl0iOugM86WZCjfjWkte
+W5MAnRSJTWwaR5SLfWWqDbE3teoKO0Cm
+=E9v0
 -----END PGP SIGNATURE-----

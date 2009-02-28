@@ -3,7 +3,7 @@ package String::BufferStack;
 use strict;
 use warnings;
 
-our $VERSION; $VERSION = "1.12";
+our $VERSION; $VERSION = "1.13";
 
 =head1 NAME
 
@@ -451,5 +451,23 @@ sub out_method {
     $self->{out_method} = shift if @_;
     return $self->{out_method};
 }
+
+=head1 SEE ALSO
+
+Many concepts were originally taken from L<HTML::Mason>'s internal
+buffer stack.
+
+=head1 AUTHORS
+
+Alex Vandiver C<< alexmv@bestpractical.com >>
+
+=head1 LICENSE
+
+Copyright 2008-2009, Best Practical Solutions.
+
+This package is distributed under the same terms as Perl itself.
+
+=cut
+
 
 1;
