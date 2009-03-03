@@ -12,7 +12,9 @@ use_ok 'String::BufferStack';
 my $stack = String::BufferStack->new;
 ok($stack, "Made an object");
 isa_ok($stack, 'String::BufferStack');
-{
+SKIP: {
+    skip "Perl 5.6 doesn't support three arg open to a string", 2
+        unless $] >= 5.008;
     open my $output, '>>', \$BUFFER;
     local *STDOUT = $output;
     $stack->append("Content");
