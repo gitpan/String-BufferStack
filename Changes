@@ -1,5 +1,9 @@
 Revision history for String-BufferStack
 
+1.15   Wed Jan  6 18:26:17 2009
+        * Don't calculate buffer length as it is built, unless we ask
+          for it; it has serious runtime cost
+
 1.14   Mon Mar  2 20:21:17 2009
         * No code changes; make tests pass on 5.6
 

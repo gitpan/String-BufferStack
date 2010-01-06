@@ -2,8 +2,9 @@ package String::BufferStack;
 
 use strict;
 use warnings;
+use Carp;
 
-our $VERSION; $VERSION = "1.14";
+our $VERSION; $VERSION = "1.15";
 
 =head1 NAME
 
@@ -43,6 +44,12 @@ and is flushed via L<flush_output>.  The default C<out_method> prints
 the content to C<STDOUT>.  This method will always be called with
 non-undef, non-zero length content.
 
+=item use_length
+
+Calculate length of each buffer as it is built.  This imposes a
+significant runtime cost, so should be avoided if at all possible.
+Defaults to off.
+
 =back
 
 =cut
@@ -58,6 +65,7 @@ sub new {
         output => \$output,
         out_method => $args{out_method} || sub { print STDOUT @_ },
         pre_appends => {},
+        use_length => $args{use_length},
     }, $class;
 }
 
@@ -121,18 +129,17 @@ sub push {
     my $self = shift;
     my $frame = {
         buffer => $self->{top} ? $self->{top}{pre_filter} : $self->{output},
-        pre_append => undef,
-        filter => undef,
         @_
     };
     my $filter = "";
     my $buffer = "";
     $frame->{buffer} = \$buffer if delete $frame->{private};
-    $frame->{length} = (defined ${$frame->{buffer}}) ? CORE::length(${$frame->{buffer}}) : 0;
+    $frame->{length} = (defined ${$frame->{buffer}}) ? CORE::length(${$frame->{buffer}}) : 0
+        if $self->{use_length} or $frame->{use_length};
     $frame->{pre_filter} = $frame->{filter} ? \$filter : $frame->{buffer};
     $self->{top} = $frame;
     local $self->{local_frame} = $frame;
-    $self->set_pre_append(delete $frame->{pre_append}) if exists $frame->{pre_append};
+    $self->set_pre_append(delete $frame->{pre_append}) if defined $frame->{pre_append};
     CORE::push(@{$self->{stack}}, $frame);
 }
 
@@ -164,17 +171,24 @@ directly to the L</output_buffer>.
 sub append {
     my $self = shift;
     my $frame = $self->{local_frame} || $self->{top};
-    my $ref = $frame ? $frame->{pre_filter} : $self->{output};
-    if ($frame and not $frame->{filter} and exists $self->{pre_appends}{$frame->{buffer}}) {
-        # This is an append to the output buffer, signal all pre_append hooks for it
-        for my $frame (@{$self->{pre_appends}{$frame->{buffer}}}) {
-            die unless $frame->{pre_append};
-            local $self->{local_frame} = $frame;
-            $frame->{pre_append}->($self, @_) if $frame->{pre_append};
+    if ($frame) {
+        my $ref = $frame->{pre_filter};
+        if (exists $self->{pre_appends}{$frame->{buffer}} and not $frame->{filter}) {
+            # This is an append to the output buffer, signal all pre_append hooks for it
+            for my $frame (@{$self->{pre_appends}{$frame->{buffer}}}) {
+                die unless $frame->{pre_append};
+                local $self->{local_frame} = $frame;
+                $frame->{pre_append}->($self, @_);
+            }
         }
-    }
-    for (@_) {
-        $$ref .= $_ if defined;
+        for (@_) {
+            $$ref .= $_ if defined;
+        }
+    } else {
+        my $ref = $self->{output};
+        for (@_) {
+            $$ref .= $_ if defined;
+        }
     }
 }
 
@@ -356,13 +370,18 @@ sub buffer_ref {
 
 =head2 length
 
-Returns the number of characters appended to the current frame; if
+If C<use_length> was enabled in the buffer stack's constructor,
+returns the number of characters appended to the current frame; if
 there are no frames, returns the length of the output buffer.
+
+If C<use_length> was not enabled, warns and returns 0.
 
 =cut
 
 sub length {
     my $self = shift;
+    carp("String::BufferStack object didn't enable use_length") and return 0
+        unless $self->{use_length} or ($self->{top} and $self->{top}{use_length});
     return $self->{top} ? CORE::length(${$self->{top}{buffer}}) - $self->{top}{length} : CORE::length(${$self->{output}});
 }
 
