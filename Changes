@@ -1,5 +1,8 @@
 Revision history for String-BufferStack
 
+1.16   Wed Oct 26 08:05:17 2011
+        * No code changes; fix license in META.yml
+
 1.15   Wed Jan  6 18:26:17 2009
         * Don't calculate buffer length as it is built, unless we ask
           for it; it has serious runtime cost
